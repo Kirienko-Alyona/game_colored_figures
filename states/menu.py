@@ -2,6 +2,7 @@
 
 import pygame
 from settings import *
+from levels import LEVEL_CONFIGS
 
 
 class MenuState:
@@ -11,6 +12,7 @@ class MenuState:
 
         self.total_score = total_score
         self.current_level = current_level
+        self.total_levels = len(LEVEL_CONFIGS)
 
         self.font = pygame.font.SysFont(None, 40)
         self.font_small = pygame.font.SysFont(None, 30)
@@ -28,8 +30,10 @@ class MenuState:
                 pygame.quit()
                 exit()
             if event.type == pygame.MOUSEBUTTONDOWN:
-                if self.button_rect.collidepoint(event.pos):
-                    self.game.set_state('gameplay')
+                # Перевіряємо, чи є ще етапи для гри
+                if self.current_level <= self.total_levels:
+                    if self.button_rect.collidepoint(event.pos):
+                        self.game.set_state('gameplay')
 
     def update(self):
         pass
@@ -55,10 +59,20 @@ class MenuState:
         level_rect = level_text.get_rect(center=(WIDTH // 2, HEIGHT // 2))
         self.screen.blit(level_text, level_rect)
 
-        # Кнопка "Грати"
-        pygame.draw.rect(self.screen, self.button_color,
-                         self.button_rect, border_radius=10)
-        button_label = self.font_small.render(self.button_text, True, BLACK)
-        button_label_rect = button_label.get_rect(
-            center=self.button_rect.center)
-        self.screen.blit(button_label, button_label_rect)
+        # Перевіряємо, чи є ще етапи
+        if self.current_level <= self.total_levels:
+            # Кнопка "Грати"
+            pygame.draw.rect(self.screen, self.button_color,
+                             self.button_rect, border_radius=10)
+            button_label = self.font_small.render(
+                self.button_text, True, BLACK)
+            button_label_rect = button_label.get_rect(
+                center=self.button_rect.center)
+            self.screen.blit(button_label, button_label_rect)
+        else:
+            # Повідомлення про завершення гри
+            end_message = self.font_small.render(
+                "Наступні етапи ще в розробці", True, WHITE)
+            message_rect = end_message.get_rect(
+                center=(WIDTH // 2, HEIGHT // 2 + 60))
+            self.screen.blit(end_message, message_rect)

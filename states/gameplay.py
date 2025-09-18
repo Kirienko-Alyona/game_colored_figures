@@ -4,21 +4,32 @@ import pygame
 import random
 from settings import *
 from sprites import Square, Circle
+from levels import LEVEL_CONFIGS
 
 
 class GameplayState:
-    def __init__(self, screen, game):
+    def __init__(self, screen, game, current_level):
         self.screen = screen
-        self.game = game  # Зберігаємо посилання на об'єкт Game
+        self.game = game
+        self.current_level = current_level
         self.score = 0
 
+        # Завантаження конфігурації для поточного рівня
+        self.level_config = LEVEL_CONFIGS.get(
+            self.current_level, LEVEL_CONFIGS[1])
+
         self.font = pygame.font.SysFont(None, 30)
+
+        # Встановлення кольору квадрата з конфігурації
+        square_color = self.level_config["square_color"]
+        if square_color == "random":
+            square_color = random.choice(COLORS)
 
         self.square = Square(
             WIDTH // 2 - SQUARE_SIZE // 2,
             HEIGHT - SQUARE_SIZE - 10,
             SQUARE_SIZE,
-            random.choice(COLORS)
+            square_color
         )
         self.circles = pygame.sprite.Group()
 
@@ -36,11 +47,21 @@ class GameplayState:
     def update(self):
         current_time = pygame.time.get_ticks()
 
-        if current_time >= self.next_color_change_time:
-            self.square.change_color()
-            self.next_color_change_time = current_time + \
-                random.randint(*COLOR_CHANGE_TIME_RANGE)
+        # Визначаємо, чи є коло, що знаходиться в зоні квадратика
+        circle_in_danger_zone = False
+        for circle in self.circles:
+            if circle.rect.bottom >= self.square.rect.top:
+                circle_in_danger_zone = True
+                break
 
+        # Логіка зміни кольору (якщо дозволено конфігурацією і немає кола в небезпечній зоні)
+        if self.level_config["change_square_color"] and not circle_in_danger_zone:
+            if current_time >= self.next_color_change_time:
+                self.square.change_color()
+                self.next_color_change_time = current_time + \
+                    random.randint(*COLOR_CHANGE_TIME_RANGE)
+
+        # Логіка спавну кіл
         if current_time >= self.next_circle_time:
             self.circles.add(
                 Circle(
@@ -55,8 +76,12 @@ class GameplayState:
 
         keys = pygame.key.get_pressed()
         self.square.update(keys, WIDTH)
-        self.circles.update()
 
+        # Оновлення швидкості падіння кіл з конфігурації рівня
+        for circle in self.circles:
+            circle.rect.y += self.level_config["circle_speed"]
+
+        # Обробка зіткнень
         collided_circles = pygame.sprite.spritecollide(
             self.square, self.circles, False)
         for circle in collided_circles:
@@ -64,10 +89,14 @@ class GameplayState:
                 self.score += 1
                 circle.kill()
             else:
-                # Кінець гри: оновлюємо рахунок і повертаємось до меню
-                self.game.update_score_and_level(self.score)
-                self.game.set_state('menu')
+                self.game.set_game_over_state()
 
+        # Перевірка на умову перемоги після кожного оновлення
+        if self.score >= self.level_config["win_score"]:
+            self.game.update_score_and_level(self.score)
+            self.game.set_state('menu')
+
+        # Обробка кіл, які вилетіли за екран
         for circle in list(self.circles):
             if circle.rect.top > HEIGHT:
                 if circle.color == self.square.color:

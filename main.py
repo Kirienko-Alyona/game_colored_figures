@@ -3,6 +3,7 @@
 import pygame
 from states.gameplay import GameplayState
 from states.menu import MenuState
+from states.gameover import GameoverState
 
 
 class Game:
@@ -21,28 +22,30 @@ class Game:
         self.set_state('menu')
 
     def set_state(self, state_name):
-        # Коли ми переходимо в "gameplay" стан,
-        # ми повинні створювати його НОВИЙ екземпляр щоразу
         if state_name == 'menu':
             self.state = MenuState(
                 self.screen, self.total_score, self.current_level, self)
         elif state_name == 'gameplay':
-            self.state = GameplayState(self.screen, self)
+            self.state = GameplayState(self.screen, self, self.current_level)
+
+    def set_game_over_state(self):
+        self.state = GameoverState(
+            self.screen, self.total_score, self.current_level, self)
 
     def update_score_and_level(self, score):
         self.total_score += score
         self.current_level += 1
 
+    def reset_game(self):
+        self.total_score = 0
+        self.current_level = 1
+
     def run(self):
         running = True
         while running:
-            # Обробка подій, що впливають на стан
             self.state.handle_events()
-
-            # Оновлення та малювання поточного стану
             self.state.update()
             self.state.draw()
-
             pygame.display.update()
             self.clock.tick(30)
 
