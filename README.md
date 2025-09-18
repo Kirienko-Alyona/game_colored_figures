@@ -27,3 +27,10 @@ State – для керування станами гри.
 Observer / Event system – для реакції на події (збільшення очок, втрата життя).
 
 Component-based – для складних об’єктів, розділення поведінки на компоненти (фізика, AI, рендер).
+
+
+-- ЗАПУСТИТИ pygbag
+    pygbag C:\Users\Lenovo\Documents\Python-web\game_colored_figures
+
+-- ЗУПИНИТИ pygbag
+    ctrl+c

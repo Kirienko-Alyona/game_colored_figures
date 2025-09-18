@@ -1,5 +1,5 @@
 # main.py
-
+import asyncio
 import pygame
 from states.gameplay import GameplayState
 from states.menu import MenuState
@@ -40,7 +40,7 @@ class Game:
         self.total_score = 0
         self.current_level = 1
 
-    def run(self):
+    async def run(self):
         running = True
         while running:
             self.state.handle_events()
@@ -48,10 +48,11 @@ class Game:
             self.state.draw()
             pygame.display.update()
             self.clock.tick(30)
+            await asyncio.sleep(0)  # важливо для Pygbag
 
         pygame.quit()
 
 
 if __name__ == "__main__":
     game = Game()
-    game.run()
+    asyncio.run(game.run())
