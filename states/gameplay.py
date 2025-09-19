@@ -50,7 +50,8 @@ class GameplayState:
         # Визначаємо, чи є коло, що знаходиться в зоні квадратика
         circle_in_danger_zone = False
         for circle in self.circles:
-            if circle.rect.bottom >= self.square.rect.top:
+            # Змінено: зона небезпеки тепер 3 висоти квадрата від його нижнього краю
+            if circle.rect.bottom >= self.square.rect.bottom - (3 * self.square.size):
                 circle_in_danger_zone = True
                 break
 
@@ -61,7 +62,7 @@ class GameplayState:
                 self.next_color_change_time = current_time + \
                     random.randint(*COLOR_CHANGE_TIME_RANGE)
 
-        # Логіка спавну кіл
+        # Логіка появи кіл
         if current_time >= self.next_circle_time:
             self.circles.add(
                 Circle(
