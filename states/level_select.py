@@ -18,17 +18,25 @@ class LevelSelectState:
         self.create_level_buttons()
 
     def create_level_buttons(self):
-        button_size = 80
+        button_size = 50
         spacing = 20
-        start_x = (WIDTH - (self.total_levels * button_size +
-                   (self.total_levels - 1) * spacing)) // 2
-        start_y = HEIGHT // 2 - button_size // 2
+        buttons_per_row = 6
+
+        # Розрахунок стартових позицій для першого рядка
+        row_width = buttons_per_row * button_size + \
+            (buttons_per_row - 1) * spacing
+        start_x = (WIDTH - row_width) // 2
+        start_y = HEIGHT // 2 - button_size * 2  # Відступи для кількох рядків
 
         for i in range(1, self.total_levels + 1):
-            button_rect = pygame.Rect(
-                start_x, start_y, button_size, button_size)
+            row = (i - 1) // buttons_per_row
+            col = (i - 1) % buttons_per_row
+
+            x = start_x + col * (button_size + spacing)
+            y = start_y + row * (button_size + spacing)
+
+            button_rect = pygame.Rect(x, y, button_size, button_size)
             self.buttons.append({"rect": button_rect, "level": i})
-            start_x += button_size + spacing
 
     def handle_events(self):
         for event in pygame.event.get():
