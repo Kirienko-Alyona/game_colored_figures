@@ -56,7 +56,11 @@ class GameoverState:
         self.screen.blit(level_text, level_rect)
 
         # Кнопка "Пройти етап знову"
-        pygame.draw.rect(self.screen, self.button_color,
+        repeat_level_color = BLUE
+        if self.button_rect.collidepoint(pygame.mouse.get_pos()):
+            repeat_level_color = LIGHT_GRAY
+
+        pygame.draw.rect(self.screen, repeat_level_color,
                          self.button_rect, border_radius=10)
         button_label = self.font_small.render(self.button_text, True, WHITE)
         button_label_rect = button_label.get_rect(

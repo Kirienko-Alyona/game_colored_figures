@@ -77,8 +77,13 @@ class MenuState:
         self.screen.blit(level_text, level_rect)
 
         if self.current_level <= self.total_levels:
-            # Рисуем кнопку "Грати"
-            pygame.draw.rect(self.screen, self.button_play_color,
+            # Визначаємо колір кнопки "Грати" залежно від положення курсору
+            play_color = self.button_play_color
+            if self.button_play_rect.collidepoint(pygame.mouse.get_pos()):
+                play_color = LIGHT_GRAY
+
+             # Рисуем кнопку "Грати"
+            pygame.draw.rect(self.screen, play_color,
                              self.button_play_rect, border_radius=10)
             button_label = self.font_small.render(
                 self.button_play_text, True, BLACK)
@@ -86,8 +91,13 @@ class MenuState:
                 center=self.button_play_rect.center)
             self.screen.blit(button_label, button_label_rect)
 
+            # Визначаємо колір кнопки "Обрати етап" залежно від положення курсору
+            select_color = self.button_select_color
+            if self.button_select_rect.collidepoint(pygame.mouse.get_pos()):
+                select_color = LIGHT_GRAY
+
             # Рисуем кнопку "Обрати етап"
-            pygame.draw.rect(self.screen, self.button_select_color,
+            pygame.draw.rect(self.screen, select_color,
                              self.button_select_rect, border_radius=10)
             button_select_label = self.font_small.render(
                 self.button_select_text, True, WHITE)
@@ -102,7 +112,12 @@ class MenuState:
                 center=(WIDTH // 2, HEIGHT // 2 + 60))
             self.screen.blit(end_message, message_rect)
 
-            pygame.draw.rect(self.screen, self.button_repeat_color,
+            # Визначаємо колір кнопки "Почати гру заново" залежно від положення курсору
+            repeat_color = self.button_repeat_color
+            if self.button_repeat_rect.collidepoint(pygame.mouse.get_pos()):
+                repeat_color = LIGHT_GRAY
+
+            pygame.draw.rect(self.screen, repeat_color,
                              self.button_repeat_rect, border_radius=10)
             button_label = self.font_small.render(
                 self.button_repeat_text, True, BLACK)

@@ -70,7 +70,11 @@ class VictoryState:
         self.fireworks.draw(self.screen)
 
         # Кнопка "Наступний етап"
-        pygame.draw.rect(self.screen, self.next_button_color,
+        next_level_color = GREEN
+        if self.next_button_rect.collidepoint(pygame.mouse.get_pos()):
+            next_level_color = LIGHT_GRAY
+
+        pygame.draw.rect(self.screen, next_level_color,
                          self.next_button_rect, border_radius=10)
         button_label = self.font_small.render(
             self.next_button_text, True, BLACK)

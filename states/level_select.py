@@ -66,7 +66,12 @@ class LevelSelectState:
         self.screen.blit(title_text, title_rect)
 
         for button in self.buttons:
-            pygame.draw.rect(self.screen, BLUE,
+            # Визначаємо колір кнопки етапу залежно від положення курсору
+            button_color = BLUE
+            if button["rect"].collidepoint(pygame.mouse.get_pos()):
+                button_color = LIGHT_GRAY
+
+            pygame.draw.rect(self.screen, button_color,
                              button["rect"], border_radius=10)
             level_text = self.font.render(str(button["level"]), True, WHITE)
             text_rect = level_text.get_rect(center=button["rect"].center)
@@ -74,7 +79,14 @@ class LevelSelectState:
 
         # Кнопка "Назад"
         back_button_rect = pygame.Rect(20, 20, 100, 40)
-        pygame.draw.rect(self.screen, GRAY, back_button_rect, border_radius=5)
+
+        # Визначаємо колір кнопки "Назад" залежно від положення курсору
+        back_color = GRAY
+        if back_button_rect.collidepoint(pygame.mouse.get_pos()):
+            back_color = LIGHT_GRAY
+
+        pygame.draw.rect(self.screen, back_color,
+                         back_button_rect, border_radius=5)
         back_text = self.font_small.render("Назад", True, WHITE)
         back_text_rect = back_text.get_rect(center=back_button_rect.center)
         self.screen.blit(back_text, back_text_rect)
