@@ -5,14 +5,15 @@ import pygame
 # Розміри вікна
 WIDTH, HEIGHT = 500, 500
 
-# Кольори
+# Більш м'які відтінки
+BLACK = (20, 20, 20)           # Майже чорний, але менш різкий
+WHITE = (240, 240, 240)        # Світло-сірий, не сліпучо-білий
+GRAY = (180, 180, 180)         # Світлий сірий
+# Кольори для кіл і квадрата
 BLUE = (65, 105, 225)       # Royal Blue
 YELLOW = (255, 204, 102)    # Mellow Yellow
 PURPLE = (153, 50, 204)     # Dark Orchid
 GREEN = (60, 179, 113)      # Medium Sea Green
-WHITE = (255, 255, 255)
-BLACK = (0, 0, 0)
-GRAY = (128, 128, 128)
 COLORS = [BLUE, YELLOW, PURPLE, GREEN]
 
 # Налаштування квадрата
