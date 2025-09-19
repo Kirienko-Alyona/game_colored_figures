@@ -4,6 +4,7 @@ import pygame
 from states.gameplay import GameplayState
 from states.menu import MenuState
 from states.gameover import GameoverState
+from states.level_select import LevelSelectState  # Новый импорт
 
 
 class Game:
@@ -27,6 +28,8 @@ class Game:
                 self.screen, self.total_score, self.current_level, self)
         elif state_name == 'gameplay':
             self.state = GameplayState(self.screen, self, self.current_level)
+        elif state_name == 'level_select':
+            self.state = LevelSelectState(self.screen, self)
 
     def set_game_over_state(self):
         self.state = GameoverState(
