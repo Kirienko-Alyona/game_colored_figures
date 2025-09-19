@@ -53,7 +53,7 @@ class LevelSelectState:
                 for button in self.buttons:
                     if button["rect"].collidepoint(event.pos):
                         self.game.current_level = button["level"]
-                        self.game.set_state('gameplay')
+                        self.game.set_next_level_state()
 
     def update(self):
         pass

@@ -32,8 +32,7 @@ class VictoryState:
                 exit()
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if self.next_button_rect.collidepoint(event.pos):
-                    # Перехід в меню
-                    self.game.set_state('menu')
+                    self.game.set_next_level_state()
 
     def update(self):
         current_time = pygame.time.get_ticks()
