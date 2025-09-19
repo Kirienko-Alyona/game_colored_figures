@@ -82,7 +82,7 @@ class GameplayState:
         for circle in self.circles:
             circle.rect.y += self.level_config["circle_speed"]
 
-        # Обробка зіткнень
+       # Обробка зіткнень
         collided_circles = pygame.sprite.spritecollide(
             self.square, self.circles, False)
         for circle in collided_circles:
@@ -92,10 +92,10 @@ class GameplayState:
             else:
                 self.game.set_game_over_state()
 
-        # Перевірка на умову перемоги після кожного оновлення
+        # Змінено: перехід на екран перемоги
         if self.score >= self.level_config["win_score"]:
             self.game.update_score_and_level(self.score)
-            self.game.set_state('menu')
+            self.game.set_victory_state()
 
         # Обробка кіл, які вилетіли за екран
         for circle in list(self.circles):

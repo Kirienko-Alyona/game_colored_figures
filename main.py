@@ -5,6 +5,7 @@ from states.gameplay import GameplayState
 from states.menu import MenuState
 from states.gameover import GameoverState
 from states.level_select import LevelSelectState  # Новый импорт
+from states.victory import VictoryState
 
 
 class Game:
@@ -30,6 +31,10 @@ class Game:
             self.state = GameplayState(self.screen, self, self.current_level)
         elif state_name == 'level_select':
             self.state = LevelSelectState(self.screen, self)
+
+    def set_victory_state(self):
+        self.state = VictoryState(
+            self.screen, self.total_score, self.current_level, self)
 
     def set_game_over_state(self):
         self.state = GameoverState(
