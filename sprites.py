@@ -32,6 +32,22 @@ class Circle(pygame.sprite.Sprite):
         pygame.draw.circle(self.image, color, (radius, radius), radius)
         self.rect = self.image.get_rect(center=(x, y))
         self.color = color
+        self.speed = CIRCLE_FALL_SPEED  # default
 
     def update(self):
-        self.rect.y += CIRCLE_FALL_SPEED
+        self.rect.y += self.speed
+
+
+class Triangle(pygame.sprite.Sprite):
+    def __init__(self, x, y, size, color):
+        super().__init__()
+        self.image = pygame.Surface((size, size), pygame.SRCALPHA)
+        points = [(size // 2, 0), (0, size), (size, size)]
+        pygame.draw.polygon(self.image, color, points)
+        self.rect = self.image.get_rect(center=(x, y))
+        self.color = color
+        self.size = size
+        self.speed = CIRCLE_FALL_SPEED  # default
+
+    def update(self):
+        self.rect.y += self.speed

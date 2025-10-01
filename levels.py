@@ -1,6 +1,7 @@
 # levels.py
 
 from settings import BLUE, YELLOW, PURPLE, GREEN, COLORS
+from sprites import Circle, Triangle
 
 # Конфігурації для кожного рівня
 LEVEL_CONFIGS = {
@@ -9,26 +10,28 @@ LEVEL_CONFIGS = {
         'description': 'Збери 10 кіл, щоб навчитися грати.',
         "square_color": BLUE,
         "change_square_color": False,
-        "win_score": 3,
         "circle_speed": 5,
         "circle_color": GREEN,
-        # "figure_type": CIRCLE,
+        "figure_type": [Circle],
+        "required_figures": {"Circle": 3},
     },
     2: {
         'name': 'Зміна кольорів',
         'description': 'Колір квадрата буде змінюватись. Будь уважний!',
         "square_color": "random",
         "change_square_color": True,
-        "win_score": 3,
         "circle_speed": 6,
+        "figure_type": [Circle],
+        "required_figures": {"Circle": 3},
     },
     3: {
         'name': 'Прискорюйся!',
         'description': 'Кола падають значно швидше. Не втрачай концентрацію.',
         "square_color": "random",
         "change_square_color": True,
-        "win_score": 3,
         "circle_speed": 7,
+        "figure_type": [Circle],
+        "required_figures": {"Circle": 3},
     },
     4: {
         'name': 'Етап 4',
@@ -37,6 +40,8 @@ LEVEL_CONFIGS = {
         "change_square_color": True,
         "win_score": 3,
         "circle_speed": 8,
+        "figure_type": [Circle, Triangle],
+        "required_figures": {"Circle": 2, "Triangle": 1},
     },
     5: {
         'name': 'Етап 5',
@@ -45,6 +50,8 @@ LEVEL_CONFIGS = {
         "change_square_color": True,
         "win_score": 3,
         "circle_speed": 9,
+        "figure_type": [Circle, Triangle],
+        "required_figures": {"Circle": 2, "Triangle": 1},
     },
     6: {
         'name': 'Етап 6',
@@ -53,6 +60,8 @@ LEVEL_CONFIGS = {
         "change_square_color": True,
         "win_score": 3,
         "circle_speed": 10,
+        "figure_type": [Circle, Triangle],
+        "required_figures": {"Circle": 2, "Triangle": 1},
     },
     7: {
         'name': 'Етап 7',
@@ -61,6 +70,8 @@ LEVEL_CONFIGS = {
         "change_square_color": True,
         "win_score": 3,
         "circle_speed": 11,
+        "figure_type": [Circle, Triangle],
+        "required_figures": {"Circle": 2, "Triangle": 1},
     },
     8: {
         'name': 'Етап 8',
@@ -69,6 +80,8 @@ LEVEL_CONFIGS = {
         "change_square_color": True,
         "win_score": 3,
         "circle_speed": 12,
+        "figure_type": [Circle, Triangle],
+        "required_figures": {"Circle": 2, "Triangle": 1},
     },
     9: {
         'name': 'Етап 9',
@@ -77,6 +90,8 @@ LEVEL_CONFIGS = {
         "change_square_color": True,
         "win_score": 3,
         "circle_speed": 13,
+        "figure_type": [Circle, Triangle],
+        "required_figures": {"Circle": 2, "Triangle": 1},
     },
     10: {
         'name': 'Етап 10',
@@ -85,5 +100,7 @@ LEVEL_CONFIGS = {
         "change_square_color": True,
         "win_score": 3,
         "circle_speed": 14,
+        "figure_type": [Circle, Triangle],
+        "required_figures": {"Circle": 2, "Triangle": 1},
     },
 }
